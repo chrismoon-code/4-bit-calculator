@@ -1,0 +1,121 @@
+module Lab1(leftnum,rightnum,out,operation,extra);
+	// Student Name: Christopher Moon
+	// Student Number: 216527673
+	reg[3:0] sum; //result
+	input [3:0] leftnum;   //left number of calculation    
+	input [3:0] rightnum; //right number of calculation
+   input operation; //var
+	output [20:0] out; //shows leftnum + rightnum = sum	
+	output reg[2:0] extra; //utilizes another display if needed
+   wire[3:0] negative;
+	
+	//redid the 7 segment display code because of wrong order from last lab, and changed it to be in the right order
+	assign out[0]=(~leftnum[3]&~leftnum[2]&~leftnum[1]&leftnum[0])|(~leftnum[3]&leftnum[2]&~leftnum[1]&~leftnum[0])|(leftnum[3]&~leftnum[2]&leftnum[1]&leftnum[0])|(leftnum[3]&leftnum[2]&~leftnum[1]&leftnum[0]);
+
+	assign out[1]=(~leftnum[3]&leftnum[2]&~leftnum[1]&leftnum[0])|(~leftnum[3]&leftnum[2]&leftnum[1]&~leftnum[0])|(leftnum[3]&~leftnum[2]&leftnum[1]&leftnum[0])|(leftnum[3]&leftnum[2]&~leftnum[1]&~leftnum[0])|(leftnum[3]&leftnum[2]&leftnum[1]&~leftnum[0])|(leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0]);
+
+	assign out[2]=(~leftnum[3]&~leftnum[2]&leftnum[1]&~leftnum[0])|(leftnum[3]&leftnum[2]&~leftnum[1]&~leftnum[0])|(leftnum[3]&leftnum[2]&leftnum[1]&~leftnum[0])|(leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0]);
+
+	assign out[3]=(~leftnum[3]&~leftnum[2]&~leftnum[1]&leftnum[0])|(~leftnum[3]&leftnum[2]&~leftnum[1]&~leftnum[0])|(~leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0])|(leftnum[3]&~leftnum[2]&leftnum[1]&~leftnum[0])|(leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0]);
+
+	assign out[4]=(~leftnum[3]&~leftnum[2]&~leftnum[1]&leftnum[0])|(~leftnum[3]&~leftnum[2]&leftnum[1]&leftnum[0])|(~leftnum[3]&leftnum[2]&~leftnum[1]&~leftnum[0])|(~leftnum[3]&leftnum[2]&~leftnum[1]&leftnum[0])|(~leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0])|(leftnum[3]&~leftnum[2]&~leftnum[1]&leftnum[0]);
+
+	assign out[5]=(~leftnum[3]&~leftnum[2]&~leftnum[1]&leftnum[0])|(~leftnum[3]&~leftnum[2]&leftnum[1]&~leftnum[0])|(~leftnum[3]&~leftnum[2]&leftnum[1]&leftnum[0])|(~leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0])|(leftnum[3]&leftnum[2]&~leftnum[1]&leftnum[0]);
+	
+	assign out[6]=(~leftnum[3]&~leftnum[2]&~leftnum[1])|(~leftnum[3]&leftnum[2]&leftnum[1]&leftnum[0])|(leftnum[3]&leftnum[2]&~leftnum[1]&~leftnum[0]);
+
+
+
+	//rightnum
+	assign out[7]=(~rightnum[3]&~rightnum[2]&~rightnum[1]&rightnum[0])|(~rightnum[3]&rightnum[2]&~rightnum[1]&~rightnum[0])|(rightnum[3]&~rightnum[2]&rightnum[1]&rightnum[0])|(rightnum[3]&rightnum[2]&~rightnum[1]&rightnum[0]);
+
+	assign out[8]=(~rightnum[3]&rightnum[2]&~rightnum[1]&rightnum[0])|(~rightnum[3]&rightnum[2]&rightnum[1]&~rightnum[0])|(rightnum[3]&~rightnum[2]&rightnum[1]&rightnum[0])|(rightnum[3]&rightnum[2]&~rightnum[1]&~rightnum[0])|(rightnum[3]&rightnum[2]&rightnum[1]&~rightnum[0])|(rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0]);
+
+	assign out[9]=(~rightnum[3]&~rightnum[2]&rightnum[1]&~rightnum[0])|(rightnum[3]&rightnum[2]&~rightnum[1]&~rightnum[0])|(rightnum[3]&rightnum[2]&rightnum[1]&~rightnum[0])|(rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0]);
+
+	assign out[10]=(~rightnum[3]&~rightnum[2]&~rightnum[1]&rightnum[0])|(~rightnum[3]&rightnum[2]&~rightnum[1]&~rightnum[0])|(~rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0])|(rightnum[3]&~rightnum[2]&rightnum[1]&~rightnum[0])|(rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0]);
+
+	assign out[11]=(~rightnum[3]&~rightnum[2]&~rightnum[1]&rightnum[0])|(~rightnum[3]&~rightnum[2]&rightnum[1]&rightnum[0])|(~rightnum[3]&rightnum[2]&~rightnum[1]&~rightnum[0])|(~rightnum[3]&rightnum[2]&~rightnum[1]&rightnum[0])|(~rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0])|(rightnum[3]&~rightnum[2]&~rightnum[1]&rightnum[0]);
+
+	assign out[12]=(~rightnum[3]&~rightnum[2]&~rightnum[1]&rightnum[0])|(~rightnum[3]&~rightnum[2]&rightnum[1]&~rightnum[0])|(~rightnum[3]&~rightnum[2]&rightnum[1]&rightnum[0])|(~rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0])|(rightnum[3]&rightnum[2]&~rightnum[1]&rightnum[0]);
+
+	assign out[13]=(~rightnum[3]&~rightnum[2]&~rightnum[1])|(~rightnum[3]&rightnum[2]&rightnum[1]&rightnum[0])|(rightnum[3]&rightnum[2]&~rightnum[1]&~rightnum[0]);
+
+	//sum
+	assign out[14]=(~sum[3]&~sum[2]&~sum[1]&sum[0])|(~sum[3]&sum[2]&~sum[1]&~sum[0])|(sum[3]&~sum[2]&sum[1]&sum[0])|(sum[3]&sum[2]&~sum[1]&sum[0]);
+
+	assign out[15]=(~sum[3]&sum[2]&~sum[1]&sum[0])|(~sum[3]&sum[2]&sum[1]&~sum[0])|(sum[3]&~sum[2]&sum[1]&sum[0])|(sum[3]&sum[2]&~sum[1]&~sum[0])|(sum[3]&sum[2]&sum[1]&~sum[0])|(sum[3]&sum[2]&sum[1]&sum[0]);
+
+	assign out[16]=(~sum[3]&~sum[2]&sum[1]&~sum[0])|(sum[3]&sum[2]&~sum[1]&~sum[0])|(sum[3]&sum[2]&sum[1]&~sum[0])|(sum[3]&sum[2]&sum[1]&sum[0]);
+
+	assign out[17]=(~sum[3]&~sum[2]&~sum[1]&sum[0])|(~sum[3]&sum[2]&~sum[1]&~sum[0])|(~sum[3]&sum[2]&sum[1]&sum[0])|(sum[3]&~sum[2]&sum[1]&~sum[0])|(sum[3]&sum[2]&sum[1]&sum[0]);
+
+	assign out[18]=(~sum[3]&~sum[2]&~sum[1]&sum[0])|(~sum[3]&~sum[2]&sum[1]&sum[0])|(~sum[3]&sum[2]&~sum[1]&~sum[0])|(~sum[3]&sum[2]&~sum[1]&sum[0])|(~sum[3]&sum[2]&sum[1]&sum[0])|(sum[3]&~sum[2]&~sum[1]&sum[0]);
+
+	assign out[19]=(~sum[3]&~sum[2]&~sum[1]&sum[0])|(~sum[3]&~sum[2]&sum[1]&~sum[0])|(~sum[3]&~sum[2]&sum[1]&sum[0])|(~sum[3]&sum[2]&sum[1]&sum[0])|(sum[3]&sum[2]&~sum[1]&sum[0]);
+
+	assign out[20]=(~sum[3]&~sum[2]&~sum[1])|(~sum[3]&sum[2]&sum[1]&sum[0])|(sum[3]&sum[2]&~sum[1]&~sum[0]);
+
+	
+	
+   
+	 
+	xor(rightnum0, rightnum[0], operation);
+	xor(rightnum1, rightnum[1], operation);
+	xor(rightnum2, rightnum[2], operation);
+	xor(rightnum3, rightnum[3], operation);
+	
+		  
+	fulladder first(operation, leftnum[0],rightnum0,negative[0],c1);
+	fulladder second(c1,leftnum[1],rightnum1,negative[1],c2);
+	fulladder third(c2,leftnum[2],rightnum2,negative[2],c3);
+	fulladder fourth(c3,leftnum[3],rightnum3,negative[3],c4);
+	
+ 
+always@(*) //when cout is 1 display 1 next to sum display if not it doesn't show anything
+begin
+	if (operation==0) 
+	begin
+	if (c4==1) 
+		begin
+		sum[3:0]=negative[3:0];
+		extra[0]=0;
+		extra[1]=0;
+		extra[2]=1;
+		end
+		else 
+		begin
+		sum[3:0]=negative[3:0];
+		extra[0]=1;
+		extra[1]=1;
+		extra[2]=1;
+		end
+	end
+   else //if cout is 0 then negative sign is used and undo 2s complement otherwise display nothing
+	begin
+		if (operation==1) 
+		begin
+		sum[3:0]=~negative[3:0]+1'b1;
+		extra[0]=1;
+		extra[1]=1;
+		extra[2]=0;
+		end
+		else 
+		begin
+		sum[3:0]=negative[3:0];
+		extra[0]=1;
+		extra[1]=1;
+		extra[2]=1;
+		end
+	end
+end
+	
+endmodule
+
+//utilized full adder from professors example
+module fulladder(cin,leftnum,rightnum,sum,cout);
+input cin,leftnum,rightnum;
+output sum,cout;
+assign sum = leftnum ^ rightnum ^ cin;
+assign cout = (leftnum & rightnum) | (leftnum & cin) | (rightnum & cin);
+endmodule
